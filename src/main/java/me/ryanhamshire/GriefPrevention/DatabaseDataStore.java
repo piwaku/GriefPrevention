@@ -102,7 +102,7 @@ public class DatabaseDataStore extends DataStore
 
             statement.execute("CREATE TABLE IF NOT EXISTS griefprevention_nextclaimid (nextid INT(15));");
 
-            statement.execute("CREATE TABLE IF NOT EXISTS griefprevention_claimdata (id INT(15), owner VARCHAR(50), lessercorner VARCHAR(100), greatercorner VARCHAR(100), builders TEXT, containers TEXT, accessors TEXT, managers TEXT, inheritnothing BOOLEAN, parentid INT(15));");
+            statement.execute("CREATE TABLE IF NOT EXISTS griefprevention_claimdata (id INT(15), owner VARCHAR(50), lessercorner VARCHAR(100), greatercorner VARCHAR(100), builders TEXT, containers TEXT, accessors TEXT, managers TEXT, inheritnothing BOOLEAN, saveexplosions BOOLEAN, explosions BOOLEAN, parentid INT(15));");
 
             statement.execute("CREATE TABLE IF NOT EXISTS griefprevention_playerdata (name VARCHAR(50), lastlogin DATETIME, accruedblocks INT(15), bonusblocks INT(15));");
 
@@ -112,6 +112,8 @@ public class DatabaseDataStore extends DataStore
             statement.execute("ALTER TABLE griefprevention_claimdata MODIFY containers TEXT;");
             statement.execute("ALTER TABLE griefprevention_claimdata MODIFY accessors TEXT;");
             statement.execute("ALTER TABLE griefprevention_claimdata MODIFY managers TEXT;");
+            statement.execute("ALTER TABLE griefprevention_claimdata MODIFY saveexplosions BOOLEAN;");
+            statement.execute("ALTER TABLE griefprevention_claimdata MODIFY explosions BOOLEAN;");
 
             //if the next claim id table is empty, this is a brand new database which will write using the latest schema
             //otherwise, schema version is determined by schemaversion table (or =0 if table is empty, see getSchemaVersion())
@@ -130,7 +132,7 @@ public class DatabaseDataStore extends DataStore
         }
 
         this.updateNameSQL = "UPDATE griefprevention_playerdata SET name = ? WHERE name = ?;";
-        this.insertClaimSQL = "INSERT INTO griefprevention_claimdata (id, owner, lessercorner, greatercorner, builders, containers, accessors, managers, inheritnothing, parentid) VALUES(?,?,?,?,?,?,?,?,?,?);";
+        this.insertClaimSQL = "INSERT INTO griefprevention_claimdata (id, owner, lessercorner, greatercorner, builders, containers, accessors, managers, inheritnothing, saveexplosions, explosions, parentid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
         this.deleteClaimSQL = "DELETE FROM griefprevention_claimdata WHERE id=?;";
         this.getPlayerDataSQL = "SELECT * FROM griefprevention_playerdata WHERE name=?;";
         this.deletePlayerDataSQL = "DELETE FROM griefprevention_playerdata WHERE name=?;";
@@ -471,13 +473,13 @@ public class DatabaseDataStore extends DataStore
             insertStmt.setString(7, accessorsString);
             insertStmt.setString(8, managersString);
             insertStmt.setBoolean(9, inheritNothing);
-            insertStmt.setLong(10, parentId);
-            insertStmt.setBoolean(11, saveExplosiveSetting);
+            insertStmt.setBoolean(10, saveExplosiveSetting);
             if(saveExplosiveSetting) {
-            	insertStmt.setBoolean(12,explosions);
+            	insertStmt.setBoolean(11,explosions);
             } else {
-            	insertStmt.setBoolean(12,false);
+            	insertStmt.setBoolean(11,false);
             }
+            insertStmt.setLong(12, parentId);
             insertStmt.executeUpdate();
         }
         catch (SQLException e)
