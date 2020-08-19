@@ -176,6 +176,10 @@ commands:
       usage: /ClaimExplosions
       permission: griefprevention.claims
       aliases: claimexplosion
+    claimsaveexplosions:
+      description: Toggles whether to save explosives setting through reboots.
+      usage: /ClaimSaveExplosions
+      permission: griefprevention.claims
     softmute:
       description: Toggles whether a player's messages will only reach other soft-muted players.
       usage: /SoftMute <player>
