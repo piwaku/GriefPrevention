@@ -1,0 +1,6 @@
+name: GriefPrevention
+main: me.ryanhamshire.GriefPrevention.GriefPrevention
+version: 1.0
+api-version: 1.16
+description: Modified GriefPRevention plugin to allow for saving Explosion vulnerability flag
+commands:

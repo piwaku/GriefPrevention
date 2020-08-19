@@ -71,6 +71,7 @@ public class Claim
     public boolean inDataStore = false;
 
     public boolean areExplosivesAllowed = false;
+    public boolean saveExplosiveSetting = false;
 
     //parent claim
     //only used for claim subdivisions.  top level claims have null here
@@ -261,6 +262,7 @@ public class Claim
         this.playerIDToClaimPermissionMap = new HashMap<>(claim.playerIDToClaimPermissionMap);
         this.inDataStore = false; //since it's a copy of a claim, not in datastore!
         this.areExplosivesAllowed = claim.areExplosivesAllowed;
+        this.saveExplosiveSetting = claim.saveExplosiveSetting;
         this.parent = claim.parent;
         this.inheritNothing = claim.inheritNothing;
         this.children = new ArrayList<>(claim.children);

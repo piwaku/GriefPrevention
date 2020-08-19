@@ -518,11 +518,18 @@ public class FlatFileDataStore extends DataStore
         List<String> managers = yaml.getStringList("Managers");
 
         boolean inheritNothing = yaml.getBoolean("inheritNothing");
-
+        boolean saveExplosiveSetting = yaml.getBoolean("saveExplosiveSetting");
+        
         out_parentID.add(yaml.getLong("Parent Claim ID", -1L));
 
         //instantiate
         claim = new Claim(lesserBoundaryCorner, greaterBoundaryCorner, ownerID, builders, containers, accessors, managers, inheritNothing, claimID);
+        claim.saveExplosiveSetting = saveExplosiveSetting;
+        
+        if(saveExplosiveSetting) {
+            claim.areExplosivesAllowed = yaml.getBoolean("explosions");
+        }
+        
         claim.modifiedDate = new Date(lastModifiedDate);
         claim.id = claimID;
 
@@ -553,16 +560,23 @@ public class FlatFileDataStore extends DataStore
         yaml.set("Accessors", accessors);
         yaml.set("Managers", managers);
 
+        boolean saveExplosiveSetting = claim.saveExplosiveSetting;
+        boolean explosions = claim.areExplosivesAllowed;
+        
         Long parentID = -1L;
         if (claim.parent != null)
         {
             parentID = claim.parent.id;
         }
-
+        
         yaml.set("Parent Claim ID", parentID);
 
         yaml.set("inheritNothing", claim.getSubclaimRestrictions());
-
+        yaml.set("saveExplosiveSetting", saveExplosiveSetting);
+        if(saveExplosiveSetting) {
+        	yaml.set("explosions", explosions);
+        }
+        
         return yaml.saveToString();
     }
 

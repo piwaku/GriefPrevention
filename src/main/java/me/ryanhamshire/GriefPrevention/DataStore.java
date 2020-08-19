@@ -1652,6 +1652,8 @@ public abstract class DataStore
         this.addDefault(defaults, Messages.ClaimsListNoPermission, "You don't have permission to get information about another player's land claims.", null);
         this.addDefault(defaults, Messages.ExplosivesDisabled, "This claim is now protected from explosions.  Use /ClaimExplosions again to disable.", null);
         this.addDefault(defaults, Messages.ExplosivesEnabled, "This claim is now vulnerable to explosions.  Use /ClaimExplosions again to re-enable protections.", null);
+        this.addDefault(defaults, Messages.SaveExplosivesSettingsEnabled, "This claim is now set to have explosive permission saved between reboots.  Use /ClaimSaveExplosions again to disable.", null);
+        this.addDefault(defaults, Messages.SaveExplosivesSettingsDisabled, "This claim is now set to have temporary explosive permmision (reset after reboots).  Use /ClaimSaveExplosions again to enable.", null);        
         this.addDefault(defaults, Messages.ClaimExplosivesAdvertisement, "To allow explosives to destroy blocks in this land claim, use /ClaimExplosions.", null);
         this.addDefault(defaults, Messages.PlayerInPvPSafeZone, "That player is in a PvP safe zone.", null);
         this.addDefault(defaults, Messages.NoPistonsOutsideClaims, "Warning: Pistons won't move blocks outside land claims.", null);

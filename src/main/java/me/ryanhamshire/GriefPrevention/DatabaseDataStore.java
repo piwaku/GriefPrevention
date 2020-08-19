@@ -454,8 +454,11 @@ public class DatabaseDataStore extends DataStore
         String accessorsString = this.storageStringBuilder(accessors);
         String managersString = this.storageStringBuilder(managers);
         boolean inheritNothing = claim.getSubclaimRestrictions();
+        boolean saveExplosiveSetting = claim.saveExplosiveSetting;
+        boolean explosions = claim.areExplosivesAllowed;
+        
         long parentId = claim.parent == null ? -1 : claim.parent.id;
-
+        
         try (PreparedStatement insertStmt = this.databaseConnection.prepareStatement(this.getInsertClaimSQL()))
         {
 
@@ -469,6 +472,12 @@ public class DatabaseDataStore extends DataStore
             insertStmt.setString(8, managersString);
             insertStmt.setBoolean(9, inheritNothing);
             insertStmt.setLong(10, parentId);
+            insertStmt.setBoolean(11, saveExplosiveSetting);
+            if(saveExplosiveSetting) {
+            	insertStmt.setBoolean(12,explosions);
+            } else {
+            	insertStmt.setBoolean(12,false);
+            }
             insertStmt.executeUpdate();
         }
         catch (SQLException e)

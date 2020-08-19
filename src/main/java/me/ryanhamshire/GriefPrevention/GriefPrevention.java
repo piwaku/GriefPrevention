@@ -2069,6 +2069,38 @@ public class GriefPrevention extends JavaPlugin
 
             return true;
         }
+        else if (cmd.getName().equalsIgnoreCase("claimsaveexplosions") && player != null)
+        {
+            //determine which claim the player is standing in
+            Claim claim = this.dataStore.getClaimAt(player.getLocation(), true /*ignore height*/, null);
+
+            if (claim == null)
+            {
+                GriefPrevention.sendMessage(player, TextMode.Err, Messages.DeleteClaimMissing);
+            }
+            else
+            {
+                String noBuildReason = claim.allowBuild(player, Material.STONE);
+                if (noBuildReason != null)
+                {
+                    GriefPrevention.sendMessage(player, TextMode.Err, noBuildReason);
+                    return true;
+                }
+
+                if (claim.saveExplosiveSetting)
+                {
+                    claim.saveExplosiveSetting = false;
+                    GriefPrevention.sendMessage(player, TextMode.Success, Messages.SaveExplosivesSettingsDisabled);
+                }
+                else
+                {
+                    claim.saveExplosiveSetting = true;
+                    GriefPrevention.sendMessage(player, TextMode.Success, Messages.SaveExplosivesSettingsEnabled);
+                }
+            }
+
+            return true;
+        }
 
         //deleteallclaims <player>
         else if (cmd.getName().equalsIgnoreCase("deleteallclaims"))

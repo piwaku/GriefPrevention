@@ -180,6 +180,8 @@ public enum Messages
     ClaimsListNoPermission,
     ExplosivesDisabled,
     ExplosivesEnabled,
+    SaveExplosivesSettingsDisabled,
+    SaveExplosivesSettingsEnabled,
     ClaimExplosivesAdvertisement,
     PlayerInPvPSafeZone,
     NoPistonsOutsideClaims,
